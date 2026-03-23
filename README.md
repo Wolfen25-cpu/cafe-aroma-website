@@ -6,7 +6,7 @@ A multi-page responsive website for a fictional coffee shop located in Aguadilla
 
 ## 🌐 Live Demo
 
-> [View Live Site](https://wolfen25-cpu.github.io/cafe-aroma-website) <!-- Update this link after deploying -->
+> [View Live Site](https://Wolfen25-cpu.github.io/cafe-aroma-website) <!-- Update this link after deploying -->
 
 ---
 
