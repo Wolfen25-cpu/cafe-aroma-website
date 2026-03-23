@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú - Café Aroma</title>
+    <meta name="author" content="Abel Caro - Estudiante A00606409">
+    <meta name="description" content="Descubre nuestro delicioso menú en Café Aroma - Proyecto para el curso de Desarrollo Web, Universidad Interamericana de Puerto Rico, Recinto de Aguadilla">
+    <meta name="keywords" content="café, coffee shop, Aguadilla, Puerto Rico, menú, bebidas, comida">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Css */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fef3c7;
+        }
+        
+        .navbar-nav .nav-link {
+            position: relative;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: #92400e;
+            transform: translateY(-2px);
+        }
+        
+        .navbar-nav .nav-link:active {
+            color: #78350f;
+            transform: translateY(0);
+        }
+        
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #92400e;
+            transition: width 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .bg-coffee-dark {
+            background-color: #78350f;
+        }
+        
+        .bg-coffee-medium {
+            background-color: #92400e;
+        }
+        
+        .bg-coffee-light {
+            background-color: #fef3c7;
+        }
+        
+        .text-coffee-dark {
+            color: #78350f;
+        }
+        
+        .text-coffee-medium {
+            color: #92400e;
+        }
+        
+        .text-coffee-light {
+            color: #fef3c7;
+        }
+        
+        .btn-coffee {
+            background-color: #92400e;
+            color: white;
+        }
+        
+        .btn-coffee:hover {
+            background-color: #78350f;
+            color: white;
+        }
+        
+        .btn-outline-coffee {
+            border-color: #92400e;
+            color: #92400e;
+        }
+        
+        .btn-outline-coffee:hover {
+            background-color: #fef3c7;
+            border-color: #92400e;
+        }
+        
+        .menu-card {
+            transition: all 0.3s ease;
+            height: 100%;
+            border: none;
+            overflow: hidden;
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .menu-img-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .menu-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .menu-card:hover .menu-img {
+            transform: scale(1.05);
+        }
+        
+        .price-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(146, 64, 14, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .category-tab {
+            border: none;
+            background: none;
+            color: #6b7280;
+            font-weight: 600;
+            padding: 10px 20px;
+            position: relative;
+        }
+        
+        .category-tab.active {
+            color: #92400e;
+        }
+        
+        .category-tab::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: #92400e;
+            transition: width 0.3s ease;
+        }
+        
+        .category-tab.active::after,
+        .category-tab:hover::after {
+            width: 100%;
+        }
+        
+        .floating-coffee {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .floating-coffee:hover {
+            transform: scale(1.1);
+        }
+        
+        .steam {
+            position: absolute;
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            animation: steam 3s infinite linear;
+            opacity: 0;
+        }
+        
+        @keyframes steam {
+            0% { transform: translateY(0) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-10px) scale(1.1); opacity: 1; }
+            100% { transform: translateY(-20px) scale(1.2); opacity: 0; }
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(120, 53, 15, 0.8), rgba(120, 53, 15, 0.8)), 
+                        url('img/menuback1.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 400px;
+        }
+        
+        .menu-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .menu-item-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .menu-item-title::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #92400e;
+            transition: width 0.3s ease;
+        }
+        
+        .menu-card:hover .menu-item-title::after {
+            width: 100%;
+        }
+        
+        .special-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #f59e0b;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            transform: rotate(15deg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-coffee-dark text-white shadow">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <!-- Logo -->
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="d-flex align-items-center">
+                        <div class="position-relative me-3">
+                            <div class="bg-coffee-medium rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="fas fa-mug-hot text-2xl text-amber-200"></i>
+                                <div class="position-absolute top-0 end-0 bg-amber-500 rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px; transform: translate(25%, -25%);">
+                                    <div class="bg-amber-300 rounded-circle" style="width: 16px; height: 16px;"></div>
+                                </div>
+                            </div>
+                            <div class="position-absolute bottom-0 start-0 bg-amber-600 rounded-circle" style="width: 16px; height: 16px; transform: translate(-25%, 25%);"></div>
+                        </div>
+                        <h1 class="m-0 text-2xl fw-bold">Café <span class="text-warning">Aroma</span></h1>
+                    </div>
+                </div>
+                
+                <!-- Banner -->
+                <div class="col-md-6">
+                    <div class="bg-coffee-medium rounded-pill p-3 text-center shadow-sm">
+                        <p class="m-0 text-coffee-light">
+                            <i class="fas fa-star text-warning me-2"></i> Abierto de 6:00 AM - 9:00 PM <i class="fas fa-star text-warning ms-2"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav w-100 justify-content-between">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home me-2"></i>Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="conocenos.html"><i class="fas fa-info-circle me-2"></i>Conócenos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="menu.html"><i class="fas fa-utensils me-2"></i>Menú</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contactenos.html"><i class="fas fa-envelope me-2"></i>Contáctenos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="eventos.html"><i class="fas fa-calendar-alt me-2"></i>Eventos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Nuestro Menú</h1>
+                    <p class="lead mb-4">Descubre nuestra selección de cafés artesanales, deliciosos postres y opciones para todos los gustos.</p>
+                    <a href="#menu" class="btn btn-warning btn-lg px-4 py-2 fw-bold">
+                        Ver menú completo <i class="fas fa-arrow-down ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container my-5" id="menu">
+        <!-- Menu Categories -->
+        <section class="mb-5">
+            <div class="d-flex justify-content-center flex-wrap mb-4">
+                <button class="category-tab active" data-category="all">Todo</button>
+                <button class="category-tab" data-category="coffee">Cafés</button>
+                <button class="category-tab" data-category="breakfast">Desayunos</button>
+                <button class="category-tab" data-category="lunch">Almuerzos</button>
+                <button class="category-tab" data-category="desserts">Postres</button>
+                <button class="category-tab" data-category="drinks">Bebidas</button>
+            </div>
+            
+            <!-- Featured Items -->
+            <div class="mb-5">
+                <h2 class="fw-bold mb-4 text-coffee-dark">Especialidades de la casa</h2>
+                <div class="row g-4">
+                    <!-- Featured Item 1 -->
+                    <div class="col-md-4">
+                        <div class="menu-card card h-100">
+                            <div class="menu-img-container">
+                                <img src="img\Menu\cafeespecial1.jpg" 
+                                     alt="Café Especial" class="menu-img">
+                                <div class="price-badge">$4.50</div>
+                                <div class="special-badge">TOP</div>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title menu-item-title">Café Aroma Especial</h3>
+                                <p class="card-text text-muted">Nuestra mezcla exclusiva con notas de chocolate y avellana, servida con espuma de leche artesanal.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-amber-100 text-coffee-medium">Café</span>
+                                    <button class="btn btn-sm btn-coffee">Añadir al pedido</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Featured Item 2 -->
+                    <div class="col-md-4">
+                        <div class="menu-card card h-100">
+                            <div class="menu-img-container">
+                                <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                                     alt="Tostadas Francesas" class="menu-img">
+                                <div class="price-badge">$6.75</div>
+                                <div class="special-badge">NUEVO</div>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title menu-item-title">Tostadas Francesas Especiales</h3>
+                                <p class="card-text text-muted">Pan brioche empapado en mezcla de huevo y especias, servido con frutas frescas y sirope de arce.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-amber-100 text-coffee-medium">Desayuno</span>
+                                    <button class="btn btn-sm btn-coffee">Añadir al pedido</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Featured Item 3 -->
+                    <div class="col-md-4">
+                        <div class="menu-card card h-100">
+                            <div class="menu-img-container">
+                                <img src="img\Menu\tartachoco.jpg" 
+                                     alt="Tarta de Chocolate" class="menu-img">
+                                <div class="price-badge">$6.50</div>
+                                <div class="special-badge">FAV</div>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title menu-item-title">Tarta de Chocolate Negro</h3>
+                                <p class="card-text text-muted">Deliciosa tarta con 70% cacao, acompañada de salsa de frambuesa y helado de vainilla.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-amber-100 text-coffee-medium">Postre</span>
+                                    <button class="btn btn-sm btn-coffee">Añadir al pedido</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Coffee Menu -->
+            <div class="menu-section p-4 mb-5" id="coffee-section">
+                <h2 class="fw-bold mb-4 text-coffee-dark">Nuestros Cafés</h2>
+                <div class="row g-4">
+                    <!-- Coffee Item 1 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                                             alt="Espresso" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Espresso</h3>
+                                            <span class="text-coffee-medium fw-bold">$2.50</span>
+                                        </div>
+                                        <p class="card-text text-muted">Un shot intenso de nuestro café tostado oscuro, perfecto para los amantes del café fuerte.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Coffee Item 2 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\cafes\cappuccino.jpg" 
+                                             alt="Cappuccino" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Cappuccino</h3>
+                                            <span class="text-coffee-medium fw-bold">$3.75</span>
+                                        </div>
+                                        <p class="card-text text-muted">Espresso balanceado con leche vaporizada y una capa de espuma cremosa.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Coffee Item 3 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\cafes\latte.jpg" 
+                                             alt="Latte" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Latte</h3>
+                                            <span class="text-coffee-medium fw-bold">$4.00</span>
+                                        </div>
+                                        <p class="card-text text-muted">Espresso suavizado con leche vaporizada y un toque ligero de espuma.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Coffee Item 4 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\cafes\mocha.jpg" 
+                                             alt="Mocha" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Mocha</h3>
+                                            <span class="text-coffee-medium fw-bold">$4.50</span>
+                                        </div>
+                                        <p class="card-text text-muted">La combinación perfecta de espresso, chocolate y leche vaporizada, coronada con crema batida.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Breakfast Menu -->
+            <div class="menu-section p-4 mb-5" id="breakfast-section">
+                <h2 class="fw-bold mb-4 text-coffee-dark">Desayunos</h2>
+                <div class="row g-4">
+                    <!-- Breakfast Item 1 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\Desayunos\dsayuno.png" 
+                                             alt="Desayuno Completo" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Desayuno Completo</h3>
+                                            <span class="text-coffee-medium fw-bold">$7.50</span>
+                                        </div>
+                                        <p class="card-text text-muted">Huevos al gusto, tostadas, jamón, queso, frutas frescas y café o jugo.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Breakfast Item 2 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\Desayunos\avena.jpg" 
+                                             alt="Avena con Frutas" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Avena con Frutas</h3>
+                                            <span class="text-coffee-medium fw-bold">$6.75</span>
+                                        </div>
+                                        <p class="card-text text-muted">Avena cremosa con leche, miel, nueces y una selección de frutas frescas de temporada.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Breakfast Item 3 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                                             alt="Tostadas Francesas" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Tostadas Francesas Clásicas</h3>
+                                            <span class="text-coffee-medium fw-bold">$5.50</span>
+                                        </div>
+                                        <p class="card-text text-muted">Pan brioche empapado en mezcla de huevo y especias, servido con sirope de arce.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Breakfast Item 4 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\Desayunos\bagel.jpg" 
+                                             alt="Bagel con Queso Crema" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Bagel con Queso Crema</h3>
+                                            <span class="text-coffee-medium fw-bold">$5.25</span>
+                                        </div>
+                                        <p class="card-text text-muted">Bagel fresco con queso crema, acompañado de mermelada casera y frutas.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lunch Menu -->
+            <div class="menu-section p-4 mb-5" id="lunch-section">
+                <h2 class="fw-bold mb-4 text-coffee-dark">Almuerzos</h2>
+                <div class="row g-4">
+                    <!-- Lunch Item 1 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="https://images.unsplash.com/photo-1546069901-d5bfd2cbfb1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                                             alt="Ensalada César" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Ensalada César con Pollo</h3>
+                                            <span class="text-coffee-medium fw-bold">$10.50</span>
+                                        </div>
+                                        <p class="card-text text-muted">Lechuga romana, croutons, parmesano y pollo a la parrilla, con aderezo césar casero.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lunch Item 2 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\almuerzos\wrappollo.jpg" 
+                                             alt="Wrap de Pollo" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Wrap de Pollo</h3>
+                                            <span class="text-coffee-medium fw-bold">$8.75</span>
+                                        </div>
+                                        <p class="card-text text-muted">Tortilla integral rellena de pollo, lechuga, tomate, aguacate y aderezo de yogur.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lunch Item 3 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\almuerzos\sandwich.JPG" 
+                                             alt="Sándwich Club" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Sándwich Club</h3>
+                                            <span class="text-coffee-medium fw-bold">$7.25</span>
+                                        </div>
+                                        <p class="card-text text-muted">Pan tostado con pollo, tocino, lechuga, tomate y mayonesa, acompañado de papas fritas.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lunch Item 4 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\almuerzos\sopa.jpg" 
+                                             alt="Sopa del Día" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Sopa del Día</h3>
+                                            <span class="text-coffee-medium fw-bold">$6.50</span>
+                                        </div>
+                                        <p class="card-text text-muted">Nuestra sopa casera preparada diariamente con ingredientes frescos y de temporada.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Desserts Menu -->
+            <div class="menu-section p-4 mb-5" id="desserts-section">
+                <h2 class="fw-bold mb-4 text-coffee-dark">Postres</h2>
+                <div class="row g-4">
+                    <!-- Dessert Item 1 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\tartachoco.jpg" 
+                                             alt="Tarta de Chocolate" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Tarta de Chocolate Negro</h3>
+                                            <span class="text-coffee-medium fw-bold">$6.50</span>
+                                        </div>
+                                        <p class="card-text text-muted">Deliciosa tarta con 70% cacao, acompañada de salsa de frambuesa y helado de vainilla.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dessert Item 2 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\cheesecake.jpg" 
+                                             alt="Cheesecake" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Cheesecake de Frutos Rojos</h3>
+                                            <span class="text-coffee-medium fw-bold">$7.25</span>
+                                        </div>
+                                        <p class="card-text text-muted">Suave cheesecake con base de galleta, cubierto con una mezcla de frutos rojos.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dessert Item 3 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\tiramisu.JPG" 
+                                             alt="Tiramisú" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Tiramisú Clásico</h3>
+                                            <span class="text-coffee-medium fw-bold">$6.75</span>
+                                        </div>
+                                        <p class="card-text text-muted">El postre italiano tradicional con capas de bizcocho empapado en café y crema de mascarpone.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dessert Item 4 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\brownie.jpg" 
+                                             alt="Brownie" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Brownie con Helado</h3>
+                                            <span class="text-coffee-medium fw-bold">$5.75</span>
+                                        </div>
+                                        <p class="card-text text-muted">Brownie casero caliente servido con una bola de helado de vainilla y salsa de chocolate.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Drinks Menu -->
+            <div class="menu-section p-4 mb-5" id="drinks-section">
+                <h2 class="fw-bold mb-4 text-coffee-dark">Bebidas</h2>
+                <div class="row g-4">
+                    <!-- Drink Item 1 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\te1.jpg" 
+                                             alt="Té Frío" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Té Frío Artesanal</h3>
+                                            <span class="text-coffee-medium fw-bold">$3.50</span>
+                                        </div>
+                                        <p class="card-text text-muted">Té negro o verde preparado en frío con hierbas y frutas naturales.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Drink Item 2 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="img\Menu\limonada.jpg" 
+                                             alt="Limonada" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Limonada Fresca</h3>
+                                            <span class="text-coffee-medium fw-bold">$3.75</span>
+                                        </div>
+                                        <p class="card-text text-muted">Limonada natural con un toque de menta y jengibre, endulzada con miel.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Drink Item 3 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                                             alt="Batido" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Batido de Frutas</h3>
+                                            <span class="text-coffee-medium fw-bold">$5.25</span>
+                                        </div>
+                                        <p class="card-text text-muted">Batido cremoso hecho con frutas frescas, yogur natural y miel.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Drink Item 4 -->
+                    <div class="col-md-6">
+                        <div class="menu-card card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="menu-img-container h-100">
+                                        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                                             alt="Jugo Natural" class="menu-img">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 class="card-title menu-item-title">Jugo Natural</h3>
+                                            <span class="text-coffee-medium fw-bold">$4.00</span>
+                                        </div>
+                                        <p class="card-text text-muted">Jugo recién exprimido de naranja, piña o la fruta de temporada disponible.</p>
+                                        <button class="btn btn-sm btn-outline-coffee">Añadir al pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Special Offers -->
+            <div class="bg-amber-100 rounded-3 p-4 mb-5">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fw-bold mb-3 text-coffee-dark">¡Oferta Especial!</h2>
+                        <p class="text-coffee-medium mb-3">Todos los martes y jueves de 2:00 PM a 5:00 PM</p>
+                        <p class="text-muted mb-3">Compra cualquier café grande y llévate un postre pequeño a mitad de precio.</p>
+                        <button class="btn btn-coffee">Ver detalles</button>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1517701550928-4ff7c8854e35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                                 alt="Oferta" class="img-fluid rounded shadow">
+                            <div class="position-absolute top-0 start-0 bg-coffee-medium text-white px-3 py-1 rounded">
+                                -50%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-coffee-dark text-white py-5"> 
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Café Aroma</h3>
+                <p class="mb-3 text-amber-100">
+                    Más que una cafetería, un lugar donde las historias se comparten y los momentos se disfrutan.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-amber-100 hover:text-warning transition">
+                        <i class="fab fa-facebook-f fa-lg"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-warning transition">
+                        <i class="fab fa-instagram fa-lg"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-warning transition">
+                        <i class="fab fa-twitter fa-lg"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Horario</h3>
+                <ul class="list-unstyled text-amber-100">
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="far fa-clock me-2"></i> Lunes-Viernes: 6AM-9PM
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="far fa-clock me-2"></i> Sábado: 7AM-10PM
+                    </li>
+                    <li class="d-flex align-items-center">
+                        <i class="far fa-clock me-2"></i> Domingo: 8AM-8PM
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Contacto</h3>
+                <ul class="list-unstyled text-amber-100">
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="fas fa-map-marker-alt me-2"></i> Calle Café #123, Aguadilla, PR
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="fas fa-phone me-2"></i> (787) 555-1234
+                    </li>
+                    <li class="d-flex align-items-center">
+                        <i class="fas fa-envelope me-2"></i> info@cafearoma.com
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Universidad</h3>
+                <p class="small text-amber-100 mb-3">
+                    Proyecto desarrollado para el curso de Desarrollo Web en el Recinto de Aguadilla de la Universidad Interamericana de Puerto Rico.
+                </p>
+                <ul class="list-unstyled text-amber-100 small">
+                    <li><a href="http://www.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">Inter.edu</a></li>
+                    <li><a href="http://www.aguadilla.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">Aguadilla Inter</a></li>
+                    <li><a href="http://web.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">Inter Web</a></li>
+                    <li><a href="http://www.elnuevodia.com/" target="_blank" class="text-amber-100 text-decoration-none">El Nuevo Día</a></li>
+                    <li><a href="http://cai.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">CAI Inter</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="border-top border-amber-800 mt-4 pt-4 text-center text-amber-100">
+            <p class="m-0">&copy; 2025 Café Aroma. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- Floating Coffee Button -->
+   <div class="floating-coffee" id="floatingCoffee">
+        <div class="position-relative">
+            <div class="bg-amber-200 rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 60px; height: 60px;">
+                <i class="fas fa-mug-hot text-2xl text-coffee-dark"></i>
+            </div>
+            <div class="steam" id="steam1" style="width: 12px; height: 12px; top: -15px; left: 5px;"></div>
+            <div class="steam" id="steam2" style="width: 10px; height: 10px; top: -20px; left: 25px;"></div>
+            <div class="steam" id="steam3" style="width: 8px; height: 8px; top: -15px; right: 5px;"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Form validation
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            let isValid = true;
+            
+            // Validate email
+            if (!emailInput.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                emailInput.classList.add('error');
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailInput.classList.remove('error');
+                emailError.style.display = 'none';
+            }
+            
+            if (isValid) {
+                alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.');
+                this.reset();
+                var modal = bootstrap.Modal.getInstance(document.getElementById('contactModal'));
+                modal.hide();
+            }
+        });
+        
+        // Floating coffee button animation
+        document.getElementById('floatingCoffee').addEventListener('mouseenter', function() {
+            document.getElementById('steam1').style.opacity = '1';
+            document.getElementById('steam2').style.opacity = '1';
+            document.getElementById('steam3').style.opacity = '1';
+            
+            setTimeout(() => {
+                document.getElementById('steam1').style.opacity = '0';
+                document.getElementById('steam2').style.opacity = '0';
+                document.getElementById('steam3').style.opacity = '0';
+            }, 3000);
+        });
+        
+        // Open modal when clicking floating coffee
+        document.getElementById('floatingCoffee').addEventListener('click', function() {
+            var myModal = new bootstrap.Modal(document.getElementById('contactModal'));
+            myModal.show();
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

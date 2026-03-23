@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contáctenos - Café Aroma</title>
+    <meta name="author" content="Abel Caro - Estudiante A00606409">
+    <meta name="description" content="Contáctenos en Café Aroma - Proyecto para el curso de Desarrollo Web, Universidad Interamericana de Puerto Rico, Recinto de Aguadilla">
+    <meta name="keywords" content="café, coffee shop, Aguadilla, Puerto Rico, contacto, formulario">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Css */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fef3c7;
+        }
+        
+        .navbar-nav .nav-link {
+            position: relative;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: #92400e;
+            transform: translateY(-2px);
+        }
+        
+        .navbar-nav .nav-link:active {
+            color: #78350f;
+            transform: translateY(0);
+        }
+        
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #92400e;
+            transition: width 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .bg-coffee-dark {
+            background-color: #78350f;
+        }
+        
+        .bg-coffee-medium {
+            background-color: #92400e;
+        }
+        
+        .bg-coffee-light {
+            background-color: #fef3c7;
+        }
+        
+        .text-coffee-dark {
+            color: #78350f;
+        }
+        
+        .text-coffee-medium {
+            color: #92400e;
+        }
+        
+        .text-coffee-light {
+            color: #fef3c7;
+        }
+        
+        .btn-coffee {
+            background-color: #92400e;
+            color: white;
+        }
+        
+        .btn-coffee:hover {
+            background-color: #78350f;
+            color: white;
+        }
+        
+        .btn-outline-coffee {
+            border-color: #92400e;
+            color: #92400e;
+        }
+        
+        .btn-outline-coffee:hover {
+            background-color: #fef3c7;
+            border-color: #92400e;
+        }
+        
+        .contact-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+        
+        .form-control:focus {
+            border-color: #92400e;
+            box-shadow: 0 0 0 0.25rem rgba(146, 64, 14, 0.25);
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(120, 53, 15, 0.8), rgba(120, 53, 15, 0.8)), 
+                        url('https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 400px;
+        }
+        
+        .floating-coffee {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .floating-coffee:hover {
+            transform: scale(1.1);
+        }
+        
+        .steam {
+            position: absolute;
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            animation: steam 3s infinite linear;
+            opacity: 0;
+        }
+        
+        @keyframes steam {
+            0% { transform: translateY(0) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-10px) scale(1.1); opacity: 1; }
+            100% { transform: translateY(-20px) scale(1.2); opacity: 0; }
+        }
+        
+        .contact-info-card {
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .contact-info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .contact-icon {
+            font-size: 2rem;
+            color: #92400e;
+        }
+        
+        .is-invalid {
+            border-color: #dc3545;
+        }
+        
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-coffee-dark text-white shadow">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <!-- Logo -->
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="d-flex align-items-center">
+                        <div class="position-relative me-3">
+                            <div class="bg-coffee-medium rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="fas fa-mug-hot text-2xl text-amber-200"></i>
+                                <div class="position-absolute top-0 end-0 bg-amber-500 rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px; transform: translate(25%, -25%);">
+                                    <div class="bg-amber-300 rounded-circle" style="width: 16px; height: 16px;"></div>
+                                </div>
+                            </div>
+                            <div class="position-absolute bottom-0 start-0 bg-amber-600 rounded-circle" style="width: 16px; height: 16px; transform: translate(-25%, 25%);"></div>
+                        </div>
+                        <h1 class="m-0 text-2xl fw-bold">Café <span class="text-warning">Aroma</span></h1>
+                    </div>
+                </div>
+                
+                <!-- Banner -->
+                <div class="col-md-6">
+                    <div class="bg-coffee-medium rounded-pill p-3 text-center shadow-sm">
+                        <p class="m-0 text-coffee-light">
+                            <i class="fas fa-star text-warning me-2"></i> Abierto de 6:00 AM - 9:00 PM <i class="fas fa-star text-warning ms-2"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav w-100 justify-content-between">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home me-2"></i>Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="conocenos.html"><i class="fas fa-info-circle me-2"></i>Conócenos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html"><i class="fas fa-utensils me-2"></i>Menú</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contactenos.html"><i class="fas fa-envelope me-2"></i>Contáctenos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="eventos.html"><i class="fas fa-calendar-alt me-2"></i>Eventos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Contáctenos</h1>
+                    <p class="lead mb-4">Estamos aquí para responder a todas sus preguntas y comentarios. ¡Escríbanos!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="row g-4">
+            <!-- Contact Form -->
+            <div class="col-lg-7">
+                <div class="contact-section">
+                    <h2 class="fw-bold mb-4 text-coffee-dark">Formulario de Contacto</h2>
+                    <p class="text-muted mb-4">Complete el siguiente formulario y nos pondremos en contacto con usted lo antes posible.</p>
+                    
+                    <form id="contactForm" novalidate>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre completo">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" required placeholder="ejemplo@correo.com">
+                            <div class="invalid-feedback">
+                                Por favor ingrese un correo electrónico válido.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="asunto" class="form-label">Asunto</label>
+                            <input type="text" class="form-control" id="asunto" placeholder="¿Sobre qué desea contactarnos?">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="comentario" class="form-label">Comentario</label>
+                            <textarea class="form-control" id="comentario" rows="5" placeholder="Escriba su mensaje aquí..."></textarea>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-coffee btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i> Enviar Mensaje
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Contact Information -->
+            <div class="col-lg-5">
+                <div class="contact-section h-100">
+                    <h2 class="fw-bold mb-4 text-coffee-dark">Información de Contacto</h2>
+                    <p class="text-muted mb-4">También puede comunicarse con nosotros a través de los siguientes medios:</p>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-12">
+                            <div class="contact-info-card p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="contact-icon me-3">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <h3 class="h5 mb-0 text-coffee-dark">Dirección</h3>
+                                </div>
+                                <p class="mb-0 text-muted">Calle Café #123, Aguadilla, Puerto Rico</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-12">
+                            <div class="contact-info-card p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="contact-icon me-3">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <h3 class="h5 mb-0 text-coffee-dark">Teléfono</h3>
+                                </div>
+                                <p class="mb-0 text-muted">(787) 555-1234</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-12">
+                            <div class="contact-info-card p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="contact-icon me-3">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <h3 class="h5 mb-0 text-coffee-dark">Correo Electrónico</h3>
+                                </div>
+                                <p class="mb-0 text-muted">info@cafearoma.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-12">
+                            <div class="contact-info-card p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="contact-icon me-3">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <h3 class="h5 mb-0 text-coffee-dark">Horario</h3>
+                                </div>
+                                <p class="mb-0 text-muted">
+                                    Lunes-Viernes: 6AM-9PM<br>
+                                    Sábado: 7AM-10PM<br>
+                                    Domingo: 8AM-8PM
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+   <footer class="bg-coffee-dark text-white py-5"> 
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Café Aroma</h3>
+                <p class="mb-3 text-amber-100">
+                    Más que una cafetería, un lugar donde las historias se comparten y los momentos se disfrutan.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-amber-100 hover:text-warning transition">
+                        <i class="fab fa-facebook-f fa-lg"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-warning transition">
+                        <i class="fab fa-instagram fa-lg"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-warning transition">
+                        <i class="fab fa-twitter fa-lg"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Horario</h3>
+                <ul class="list-unstyled text-amber-100">
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="far fa-clock me-2"></i> Lunes-Viernes: 6AM-9PM
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="far fa-clock me-2"></i> Sábado: 7AM-10PM
+                    </li>
+                    <li class="d-flex align-items-center">
+                        <i class="far fa-clock me-2"></i> Domingo: 8AM-8PM
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Contacto</h3>
+                <ul class="list-unstyled text-amber-100">
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="fas fa-map-marker-alt me-2"></i> Calle Café #123, Aguadilla, PR
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="fas fa-phone me-2"></i> (787) 555-1234
+                    </li>
+                    <li class="d-flex align-items-center">
+                        <i class="fas fa-envelope me-2"></i> info@cafearoma.com
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Universidad</h3>
+                <p class="small text-amber-100 mb-3">
+                    Proyecto desarrollado para el curso de Desarrollo Web en el Recinto de Aguadilla de la Universidad Interamericana de Puerto Rico.
+                </p>
+                <ul class="list-unstyled text-amber-100 small">
+                    <li><a href="http://www.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">Inter.edu</a></li>
+                    <li><a href="http://www.aguadilla.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">Aguadilla Inter</a></li>
+                    <li><a href="http://web.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">Inter Web</a></li>
+                    <li><a href="http://www.elnuevodia.com/" target="_blank" class="text-amber-100 text-decoration-none">El Nuevo Día</a></li>
+                    <li><a href="http://cai.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">CAI Inter</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="border-top border-amber-800 mt-4 pt-4 text-center text-amber-100">
+            <p class="m-0">&copy; 2025 Café Aroma. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- Floating Coffee Button -->
+    <div class="floating-coffee" id="floatingCoffee">
+        <div class="position-relative">
+            <div class="bg-amber-200 rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 60px; height: 60px;">
+                <i class="fas fa-mug-hot text-2xl text-coffee-dark"></i>
+            </div>
+            <div class="steam" id="steam1" style="width: 12px; height: 12px; top: -15px; left: 5px;"></div>
+            <div class="steam" id="steam2" style="width: 10px; height: 10px; top: -20px; left: 25px;"></div>
+            <div class="steam" id="steam3" style="width: 8px; height: 8px; top: -15px; right: 5px;"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Floating coffee button animation
+        document.getElementById('floatingCoffee').addEventListener('mouseenter', function() {
+            document.getElementById('steam1').style.opacity = '1';
+            document.getElementById('steam2').style.opacity = '1';
+            document.getElementById('steam3').style.opacity = '1';
+            
+            setTimeout(() => {
+                document.getElementById('steam1').style.opacity = '0';
+                document.getElementById('steam2').style.opacity = '0';
+                document.getElementById('steam3').style.opacity = '0';
+            }, 3000);
+        });
+        
+        // Form validation
+        (function() {
+            'use strict';
+            
+            const form = document.getElementById('contactForm');
+            
+            form.addEventListener('submit', function(event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    // Validate email field specifically
+                    const emailField = document.getElementById('email');
+                    if (emailField.validity.valueMissing) {
+                        emailField.classList.add('is-invalid');
+                        alert('Por favor ingrese su correo electrónico. Es un campo obligatorio.');
+                    } else if (emailField.validity.typeMismatch) {
+                        emailField.classList.add('is-invalid');
+                        alert('Por favor ingrese un correo electrónico válido.');
+                    }
+                }
+                
+                form.classList.add('was-validated');
+            }, false);
+            
+            // Real-time validation for email field
+            document.getElementById('email').addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+                
+                if (this.validity.valid) {
+                    this.classList.remove('is-invalid');
+                } else {
+                    this.classList.add('is-invalid');
+                }
+            });
+        })();
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

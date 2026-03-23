@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Aroma - Tu mejor experiencia de café</title>
+    <meta name="author" content="Abel Caro - Estudiante A00606409">
+    <meta name="description" content="Página web de Café Aroma - Proyecto para el curso de Desarrollo Web, Universidad Interamericana de Puerto Rico, Recinto de Aguadilla">
+    <meta name="keywords" content="café, coffee shop, Aguadilla, Puerto Rico, bebidas, desayunos, meriendas">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fef3c7;
+        }
+        
+        .navbar-nav .nav-link {
+            position: relative;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: #92400e;
+            transform: translateY(-2px);
+        }
+        
+        .navbar-nav .nav-link:active {
+            color: #78350f;
+            transform: translateY(0);
+        }
+        
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #92400e;
+            transition: width 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .bg-coffee-dark {
+            background-color: #78350f;
+        }
+        
+        .bg-coffee-medium {
+            background-color: #92400e;
+        }
+        
+        .bg-coffee-light {
+            background-color: #fef3c7;
+        }
+        
+        .text-coffee-dark {
+            color: #78350f;
+        }
+        
+        .text-coffee-medium {
+            color: #92400e;
+        }
+        
+        .text-coffee-light {
+            color: #fef3c7;
+        }
+        
+        .btn-coffee {
+            background-color: #92400e;
+            color: white;
+        }
+        
+        .btn-coffee:hover {
+            background-color: #78350f;
+            color: white;
+        }
+        
+        .btn-outline-coffee {
+            border-color: #92400e;
+            color: #92400e;
+        }
+        
+        .btn-outline-coffee:hover {
+            background-color: #fef3c7;
+            border-color: #92400e;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .process-step {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 30px;
+        }
+        
+        .process-step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background-color: #92400e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .floating-coffee {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .floating-coffee:hover {
+            transform: scale(1.1);
+        }
+        
+        .steam {
+            position: absolute;
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            animation: steam 3s infinite linear;
+            opacity: 0;
+        }
+        
+        @keyframes steam {
+            0% { transform: translateY(0) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-10px) scale(1.1); opacity: 1; }
+            100% { transform: translateY(-20px) scale(1.2); opacity: 0; }
+        }
+        
+        .error {
+            border-color: #dc3545 !important;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-coffee-dark text-white shadow">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <!-- Logo -->
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="d-flex align-items-center">
+                        <div class="position-relative me-3">
+                            <div class="bg-coffee-medium rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="fas fa-mug-hot text-2xl text-amber-200"></i>
+                                <div class="position-absolute top-0 end-0 bg-amber-500 rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px; transform: translate(25%, -25%);">
+                                    <div class="bg-amber-300 rounded-circle" style="width: 16px; height: 16px;"></div>
+                                </div>
+                            </div>
+                            <div class="position-absolute bottom-0 start-0 bg-amber-600 rounded-circle" style="width: 16px; height: 16px; transform: translate(-25%, 25%);"></div>
+                        </div>
+                        <h1 class="m-0 text-2xl fw-bold">Café <span class="text-warning">Aroma</span></h1>
+                    </div>
+                </div>
+                
+                <!-- Banner -->
+                <div class="col-md-6">
+                    <div class="bg-coffee-medium rounded-pill p-3 text-center shadow-sm">
+                        <p class="m-0 text-coffee-light">
+                            <i class="fas fa-star text-warning me-2"></i> Abierto de 6:00 AM - 9:00 PM <i class="fas fa-star text-warning ms-2"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav w-100 justify-content-between">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home me-2"></i>Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="conocenos.html"><i class="fas fa-info-circle me-2"></i>Conócenos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html"><i class="fas fa-utensils me-2"></i>Menú</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contactenos.html"><i class="fas fa-envelope me-2"></i>Contáctenos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="eventos.html"><i class="fas fa-calendar-alt me-2"></i>Eventos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <section class="mb-5">
+            <h1 class="text-center fw-bold mb-5 text-coffee-dark">Bienvenidos a Café Aroma</h1>
+            
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="fw-semibold mb-3 text-coffee-medium">Descubre el auténtico sabor del café</h2>
+                    <p class="text-muted mb-4">
+                        En Café Aroma, cada taza cuenta una historia. Desde los granos cuidadosamente seleccionados hasta el último sorbo, 
+                        nos esforzamos por brindarte la mejor experiencia de café en Aguadilla. Nuestros baristas expertos preparan cada bebida 
+                        con pasión y precisión para garantizar que cada visita sea memorable.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="menu.html" class="btn btn-coffee px-4 py-2 fw-medium">
+                            Ver Menú <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                        <a href="contactenos.html" class="btn btn-outline-coffee px-4 py-2 fw-medium">
+                            Reservar <i class="fas fa-calendar-check ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 position-relative">
+                    <div class="bg-amber-200 rounded-3 p-4 shadow">
+                        <img src="img\Cafe1.jpg" 
+                             alt="Café especial" class="img-fluid rounded shadow-sm">
+                    </div>
+                    <div class="position-absolute top-0 end-0 bg-amber-100 rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 80px; height: 80px; transform: translate(25%, -25%);">
+                        <div class="position-relative">
+                            <i class="fas fa-award text-3xl text-coffee-medium"></i>
+                            <div class="position-absolute bottom-0 end-0 bg-amber-500 rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
+                                <i class="fas fa-star text-xs text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="mb-5 bg-white rounded-3 shadow p-4 p-md-5">
+            <h2 class="text-center fw-bold mb-5 text-coffee-dark">Nuestras Especialidades</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card bg-amber-50 rounded-3 p-4 shadow-sm h-100">
+                        <div class="text-center mb-3">
+                            <div class="position-relative d-inline-block">
+                                <div class="bg-amber-200 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-mug-hot text-3xl text-coffee-medium"></i>
+                                </div>
+                                <div class="position-absolute top-0 end-0 bg-amber-400 rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; transform: translate(25%, -25%);">
+                                    <div class="bg-amber-300 rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
+                                        <div class="bg-amber-200 rounded-circle" style="width: 16px; height: 16px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-center fw-semibold mb-2 text-coffee-medium">Café de Origen</h3>
+                        <p class="text-center text-muted">
+                            Granos seleccionados de las mejores regiones cafetaleras del mundo, tostados artesanalmente para resaltar sus características únicas.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card bg-amber-50 rounded-3 p-4 shadow-sm h-100">
+                        <div class="text-center mb-3">
+                            <div class="position-relative d-inline-block">
+                                <div class="bg-amber-200 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-blender text-3xl text-coffee-medium"></i>
+                                </div>
+                                <div class="position-absolute top-0 end-0 bg-amber-400 rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; transform: translate(25%, -25%);">
+                                    <div class="bg-amber-300 rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
+                                        <div class="bg-amber-200 rounded-circle" style="width: 16px; height: 16px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-center fw-semibold mb-2 text-coffee-medium">Bebidas Creativas</h3>
+                        <p class="text-center text-muted">
+                            Nuestros baristas innovan constantemente con sabores y presentaciones que sorprenden y deleitan a nuestros clientes.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card bg-amber-50 rounded-3 p-4 shadow-sm h-100">
+                        <div class="text-center mb-3">
+                            <div class="position-relative d-inline-block">
+                                <div class="bg-amber-200 rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-bread-slice text-3xl text-coffee-medium"></i>
+                                </div>
+                                <div class="position-absolute top-0 end-0 bg-amber-400 rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; transform: translate(25%, -25%);">
+                                    <div class="bg-amber-300 rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
+                                        <div class="bg-amber-200 rounded-circle" style="width: 16px; height: 16px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-center fw-semibold mb-2 text-coffee-medium">Repostería Artesanal</h3>
+                        <p class="text-center text-muted">
+                            Deliciosos acompañamientos hechos diariamente con ingredientes frescos y de la más alta calidad.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="mb-5">
+            <h2 class="text-center fw-bold mb-5 text-coffee-dark">Nuestro Proceso</h2>
+            
+            <div class="position-relative">
+                <div class="d-none d-md-block position-absolute top-0 start-50 translate-middle-x h-100 w-1 bg-amber-200"></div>
+                
+                <div class="row">
+                    <!-- Step 1 -->
+                    <div class="col-md-6 pe-md-4 mb-4">
+                        <div class="process-step">
+                            <div class="process-step-number">1</div>
+                            <h3 class="fw-semibold text-coffee-medium">Selección de Granos</h3>
+                            <p class="text-muted">
+                                Trabajamos directamente con pequeños productores que cultivan café de manera sostenible y ética. 
+                                Seleccionamos solo los granos de más alta calidad para garantizar un sabor excepcional.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="col-md-6 ps-md-4 mb-4">
+                        <div class="process-step">
+                            <div class="process-step-number">2</div>
+                            <h3 class="fw-semibold text-coffee-medium">Tostado Artesanal</h3>
+                            <p class="text-muted">
+                                Nuestro maestro tostador ajusta cuidadosamente el proceso para cada lote, resaltando las características únicas 
+                                de cada origen. El tostado medio resalta la dulzura y acidez balanceada.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="col-md-6 pe-md-4 mb-4">
+                        <div class="process-step">
+                            <div class="process-step-number">3</div>
+                            <h3 class="fw-semibold text-coffee-medium">Preparación Experta</h3>
+                            <p class="text-muted">
+                                Nuestros baristas certificados preparan cada bebida con precisión, utilizando equipos profesionales y 
+                                técnicas que garantizan la extracción perfecta de sabores y aromas.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="col-md-6 ps-md-4 mb-4">
+                        <div class="process-step">
+                            <div class="process-step-number">4</div>
+                            <h3 class="fw-semibold text-coffee-medium">Experiencia Completa</h3>
+                            <p class="text-muted">
+                                Más que café, ofrecemos un ambiente acogedor donde puedes disfrutar de momentos especiales, ya sea solo, 
+                                con amigos o colegas. Cada detalle está pensado para tu comodidad.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="bg-coffee-medium text-white rounded-3 shadow overflow-hidden">
+            <div class="row g-0">
+                <div class="col-lg-6 p-4 p-md-5">
+                    <h2 class="fw-bold mb-4">Prueba nuestro café del mes</h2>
+                    <p class="text-amber-100 mb-4">
+                        Este mes presentamos nuestro exclusivo café Geisha de Panamá, con notas florales de jazmín, bergamota y un final 
+                        prolongado de melocotón. Una experiencia sensorial única en cada taza.
+                    </p>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="me-3">
+                            <div class="bg-coffee-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="fas fa-percentage text-2xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="fw-semibold m-0">15% de descuento</p>
+                            <p class="text-sm text-amber-200 m-0">en tu primera compra del café del mes</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-light text-coffee-dark fw-bold px-4 py-2 rounded-pill">
+                        Ordenar Ahora <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block position-relative">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-gradient-to-r from-coffee-medium to-transparent" style="z-index: 1;"></div>
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" 
+                         alt="Café del mes" class="img-fluid h-100 w-100 object-cover">
+                    <div class="position-absolute bottom-0 end-0" style="z-index: 2; transform: translate(-25%, -25%);">
+                        <div class="position-relative">
+                            <div class="bg-amber-200 rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 80px; height: 80px;">
+                                <div class="bg-amber-100 rounded-circle d-flex align-items-center justify-content-center" style="width: 70px; height: 70px;">
+                                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-crown text-coffee-medium text-2xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="position-absolute top-0 end-0 bg-amber-600 rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 40px; height: 40px; transform: translate(25%, -25%);">
+                                <div class="bg-amber-500 rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                    <div class="bg-amber-400 rounded-circle" style="width: 24px; height: 24px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg<footer class="bg-coffee-dark text-white py-5"> 
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Café Aroma</h3>
+                <p class="mb-3 text-amber-100">
+                    Más que una cafetería, un lugar donde las historias se comparten y los momentos se disfrutan.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-amber-100 hover:text-warning transition">
+                        <i class="fab fa-facebook-f fa-lg"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-warning transition">
+                        <i class="fab fa-instagram fa-lg"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-warning transition">
+                        <i class="fab fa-twitter fa-lg"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Horario</h3>
+                <ul class="list-unstyled text-amber-100">
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="far fa-clock me-2"></i> Lunes-Viernes: 6AM-9PM
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="far fa-clock me-2"></i> Sábado: 7AM-10PM
+                    </li>
+                    <li class="d-flex align-items-center">
+                        <i class="far fa-clock me-2"></i> Domingo: 8AM-8PM
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Contacto</h3>
+                <ul class="list-unstyled text-amber-100">
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="fas fa-map-marker-alt me-2"></i> Calle Café #123, Aguadilla, PR
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <i class="fas fa-phone me-2"></i> (787) 555-1234
+                    </li>
+                    <li class="d-flex align-items-center">
+                        <i class="fas fa-envelope me-2"></i> info@cafearoma.com
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <h3 class="fw-bold mb-3 text-warning">Universidad</h3>
+                <p class="small text-amber-100 mb-3">
+                    Proyecto desarrollado para el curso de Desarrollo Web en el Recinto de Aguadilla de la Universidad Interamericana de Puerto Rico.
+                </p>
+                <ul class="list-unstyled text-amber-100 small">
+                    <li><a href="http://www.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">Inter.edu</a></li>
+                    <li><a href="http://www.aguadilla.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">Aguadilla Inter</a></li>
+                    <li><a href="http://web.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">Inter Web</a></li>
+                    <li><a href="http://www.elnuevodia.com/" target="_blank" class="text-amber-100 text-decoration-none">El Nuevo Día</a></li>
+                    <li><a href="http://cai.inter.edu/" target="_blank" class="text-amber-100 text-decoration-none">CAI Inter</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="border-top border-amber-800 mt-4 pt-4 text-center text-amber-100">
+            <p class="m-0">&copy; 2025 Café Aroma. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </footer>
+
+    <!-- Contact Form Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold text-coffee-dark">Contáctenos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="contactForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            <div id="emailError" class="error-message mt-1">Por favor ingrese un correo electrónico válido</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Asunto</label>
+                            <input type="text" class="form-control" id="subject" name="subject">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-coffee w-100 py-2">
+                            Enviar Mensaje <i class="fas fa-paper-plane ms-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Coffee Button -->
+    <div class="floating-coffee" id="floatingCoffee">
+        <div class="position-relative">
+            <div class="bg-amber-200 rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 60px; height: 60px;">
+                <i class="fas fa-mug-hot text-2xl text-coffee-dark"></i>
+            </div>
+            <div class="steam" id="steam1" style="width: 12px; height: 12px; top: -15px; left: 5px;"></div>
+            <div class="steam" id="steam2" style="width: 10px; height: 10px; top: -20px; left: 25px;"></div>
+            <div class="steam" id="steam3" style="width: 8px; height: 8px; top: -15px; right: 5px;"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Form validation
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            let isValid = true;
+            
+            // Validate email
+            if (!emailInput.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                emailInput.classList.add('error');
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailInput.classList.remove('error');
+                emailError.style.display = 'none';
+            }
+            
+            if (isValid) {
+                alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.');
+                this.reset();
+                var modal = bootstrap.Modal.getInstance(document.getElementById('contactModal'));
+                modal.hide();
+            }
+        });
+        
+        // Floating coffee button animation
+        document.getElementById('floatingCoffee').addEventListener('mouseenter', function() {
+            document.getElementById('steam1').style.opacity = '1';
+            document.getElementById('steam2').style.opacity = '1';
+            document.getElementById('steam3').style.opacity = '1';
+            
+            setTimeout(() => {
+                document.getElementById('steam1').style.opacity = '0';
+                document.getElementById('steam2').style.opacity = '0';
+                document.getElementById('steam3').style.opacity = '0';
+            }, 3000);
+        });
+        
+        // Open modal when clicking floating coffee
+        document.getElementById('floatingCoffee').addEventListener('click', function() {
+            var myModal = new bootstrap.Modal(document.getElementById('contactModal'));
+            myModal.show();
+        });
+    </script>
+</body>
+</html>
